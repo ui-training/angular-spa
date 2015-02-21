@@ -1,6 +1,25 @@
-var myApp = angular.module("angular-example", []);
-myApp.config(["trainingProvider", function(trainingProvider){
-    trainingProvider.counter = 10;
+var myApp = angular.module("angular-example", ["ngRoute"]);
+
+myApp.config(["$routeProvider", function($routeProvider){
+    $routeProvider.when('/training', {
+            templateUrl: 'partials/training.html'
+        }).when('/table', {
+            templateUrl: 'partials/table.html',
+            controller: 'tableController'
+        }).otherwise({
+            templateUrl: 'partials/404.html'
+        })
+}]);
+
+myApp.controller("tableController", ["$scope",function($scope){
+    $scope.tableNumber = 2;
+    $scope.tableRecords = function(){
+        var list = [];
+        for(var i = 1; i <= 20; i++){
+            list.push(i*$scope.tableNumber);
+        }
+        return list;
+    }
 }]);
 
 myApp.factory("mathFactory", function(){

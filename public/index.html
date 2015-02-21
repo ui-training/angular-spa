@@ -5,20 +5,12 @@
 	<title>Angular Example</title>
 	<link rel="stylesheet" href="css/style.css"/>
 	<script src="components/angularjs/angular.min.js"></script>
+	<script src="components/angular-route/angular-route.min.js"></script>
 	<script src="js/script.js"></script>
 </head>
 <body>
-	<div ng-controller="MainCtrl">
-		<hr/>
-		<h2>Attribute</h2>
-		<div ng-training>Should be replaced</div>
-		<hr/>
-		<h2>Element</h2>
-		<ng-training> Should be replaced</ng-training>
-		<hr/>
-		<h2>Class</h2>
-		<div class="ng-training">Should be replaced</div>
-
-	</div>
+	<a href="#table">Table</a>
+	<a href="#training">Training</a>
+	<div ng-view> This is the new view</div>
 </body>
 </html>

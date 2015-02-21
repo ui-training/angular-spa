@@ -1,0 +1,8 @@
+<div>
+	<input type="text" ng-model="tableNumber"/>
+	<div class="table">
+		<div ng-repeat="item in tableRecords()">
+			{{$index + 1}} * {{tableNumber }} = {{item}}
+		</div>
+	</div>
+</div>
