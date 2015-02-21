@@ -1,0 +1,24 @@
+{
+  "name": "angular-example",
+  "version": "0.0.1",
+  "authors": [
+    "Prakash Kumar <mail@prakash.io>"
+  ],
+  "description": "Our first angular app",
+  "main": "app.js",
+  "keywords": [
+    "angular",
+    "app"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angularjs": "~1.3.13"
+  }
+}

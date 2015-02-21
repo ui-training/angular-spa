@@ -1,0 +1,8 @@
+.user-list{
+	width: 200px;
+}
+
+.user-list .user{
+	padding: 10px;
+	border: 1px solid #ccc;
+}
