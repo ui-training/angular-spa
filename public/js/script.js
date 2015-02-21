@@ -1,127 +1,114 @@
 var myApp = angular.module("angular-example", []);
 myApp.config(["trainingProvider", function(trainingProvider){
-    trainingProvider.studentCount = 10;
+    trainingProvider.counter = 10;
 }]);
-
-myApp.controller("MainCtrl", [
-    "$scope", "$location", "$http", "mathFactory", "myValue",
-    function ($scope, $location, $http, mathFactory, myValue) {
-
-        $scope = angular.extend($scope, {
-            clickCount: 0,
-            jsonRecords: {},
-            users: [
-                {
-                    name: "User 1",
-                    age: "twenty"
-                },
-                {
-                    name: "User 2",
-                    age: 23
-                },
-                {
-                    name: "User 3",
-                    age: 24
-                }
-            ]
-        });
-
-        $scope.alertMe = function () {
-            $scope.clickCount++;
-        };
-
-        setInterval(function () {
-            $scope.$apply(function () {
-                $scope.clickCount++;
-                mathFactory.setConstant($scope.clickCount);
-            });
-        }, 1000);
-
-        $scope.downloadJson = function () {
-            var httpHandler = getHttpHandler();
-
-            httpHandler.success(function (data, status, headers, config) {
-                console.log(data);
-                $scope.jsonRecords = data;
-            }).error(function (data, status, headers, config) {
-                // called asynchronously if an error occurs
-                // or server returns response with an error status.
-            });
-
-        };
-
-        var getHttpHandler = function () {
-            return $http.get('sample.json');
-        };
-
-    }
-]);
-
-myApp.provider("training", function(){
-    this.$get = function(){
-        var that = this;
-        return {
-            getUserCount: function(){
-                return that.studentCount;
-            }
-        }
-    }
-});
-
-myApp.controller("SecondCtrl", ["$scope", "mathFactory", "training", function ($scope, mathFactory, training) {
-    $scope = angular.extend($scope, {
-        number: 10,
-        array: [1, 2, 3],
-        name: {
-            first: "Jon",
-            last: "Welling"
-        }
-    });
-    console.log(training.getUserCount());
-    $scope.constant = 0;
-
-    $scope.reload = function(){
-        $scope.constant = mathFactory.getConstant();
-    };
-    $scope.number = mathFactory.square("20");
-    $scope.fullName = function () {
-        return $scope.name.first + " " + $scope.name.last;
-    };
-}]);
-
-myApp.controller("formCtrl", ["$scope", function ($scope) {
-
-}]);
-
 
 myApp.factory("mathFactory", function(){
-    var constant = 0;
     return {
-        getConstant: function(){
-            return constant;
-        },
-        setConstant : function(number){
-            constant = number;
-        },
         square: function(number){
             return number * number;
         },
-        cube: function(number){
-
+        cube:  function(number){
+            return number * number * number;
         }
     }
 });
 
-myApp.value("myValue", "10");
+myApp.service("myService", function(){
+    this.name = "Service";
+    return this;
+});
 
-myApp.service("myService", [function(){
-    this.index = index++;
-    var myName = "";
-    this.getNameInUpperCase = function(){
-        return myName.toUpperCase();
-    };
-    this.setName = function(name){
-        myName = name;
+myApp.provider("training", function(){
+    this.counter = 1;
+    this.$get = function(){
+        return {
+            counter: this.counter
+        };
     }
+});
+
+myApp.controller("MainCtrl", ["$scope", "$location", "$http", "mathFactory", "myService", "training",
+    function ($scope, $location, $http, mathFactory, myService, training) {
+        $scope = angular.extend($scope, {
+            serviceName: myService.name,
+            counter: training.counter,
+            square: mathFactory.square(10),
+            date: new Date(),
+            age: 41,
+            list: [
+                {
+                    name: "Hari",
+                    state: "New York",
+                    age: 23
+                },
+                {
+                    name: "Srinivas",
+                    state: "Texas",
+                    age: 23
+                },
+                {
+                    name: "Pradeep",
+                    state: "Texas",
+                    age: 26
+                }
+            ],
+            training:{
+                name: "AngularJS",
+                class: "Services, filters",
+                time: 60
+            }
+        });
+
 }]);
 
+myApp.filter("ageGroup", function(){
+    return function(item, defaultVal){
+        if(item < 20 && item > 12) {
+            return "Teenage";
+        }
+        if(item >= 20 && item < 30){
+            return "Youth";
+        }
+        if(item >= 30 && item < 40){
+            return "Middle age"
+        }
+        return defaultVal;
+    }
+});
+
+myApp.filter("minAge", function(){
+    return function(item, minAge){
+        var list = [];
+        item.forEach(function(record){
+            if(record.age >= minAge)
+            {
+                list.push(record);
+            }
+        });
+        return list;
+    }
+});
+
+myApp.directive("ngTraining", function(){
+    var directive = {};
+    directive.restrict = "A";
+    directive.templateUrl = 'training.html';
+
+    directive.compile = function(element, attributes) {
+        element.css("border", "1px solid #cccccc");
+        element.css("background-color", "#ffff00");
+        element.on("click", function(){
+            alert('clicked me');
+        });
+
+        var linkFunction = function($scope, element, attributes) {
+//            element.html("This is the new content: " + $scope.firstName);
+//            element.css("background-color", "#ffff00");
+        };
+
+        return linkFunction;
+    };
+
+    return directive;
+});

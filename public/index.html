@@ -8,62 +8,17 @@
 	<script src="js/script.js"></script>
 </head>
 <body>
-<div ng-controller="MainCtrl">
+	<div ng-controller="MainCtrl">
+		<hr/>
+		<h2>Attribute</h2>
+		<div ng-training>Should be replaced</div>
+		<hr/>
+		<h2>Element</h2>
+		<ng-training> Should be replaced</ng-training>
+		<hr/>
+		<h2>Class</h2>
+		<div class="ng-training">Should be replaced</div>
 
-	<div class="user-list">
-		<div class="user" ng-repeat="user in users | filter: 'twenty'">
-			<div class="name">{{user.name}}</div>
-			<div class="age">{{user.age}}</div>
-		</div>
 	</div>
-	<div>
-		Click count = {{clickCount}}
-		<br/>
-		Click square = {{countSquare}}
-	</div>
-
-	<br/>
-	<br/>
-	<br/>
-	<input type="text" ng-model="author"/>
-	<div class="author-name">{{author}}</div>
-
-	<br/>
-	<br/>
-	<button ng-click="alertMe()"> Click me</button>
-	<br/>
-	<button ng-click="downloadJson()">Load JSON contents</button>
-	<div class="json-list">
-		<div class="json-record" ng-repeat="(key, value) in jsonRecords">
-			<div>
-				<span>{{key}}</span>
-				<span>{{value}}</span>
-			</div>
-		</div>
-	</div>
-
-</div>
-
-<div ng-controller="SecondCtrl">
-	<span>{{constant}}</span>
-	<button ng-click="reload()">Reload</button>
-</div>
-
- <div ng-controller="formCtrl">
-	<form novalidate="novalidate" name="ourForm">
-		<label>Email</label>
-		<input type="email" ng-model="email" name="email" required="true"/>
-		<span ng-show="ourForm.email.$dirty && ourForm.email.$invalid"
-		      ng-hide="ourForm.email.$error.required"
-		      style="color:red;"> Invalid email</span>
-		<span ng-show="ourForm.email.$error.required"
-		      style="color:red;">Email is mandatory</span>
-		<br/>
-		<label>Phone</label>
-		<input type="text" ng-model="phone"/>
-	</form>
- </div>
-
-
 </body>
 </html>
